@@ -1,0 +1,17 @@
+{
+  "name": "padoru-padoru",
+  "version": "0.0.1",
+  "description": "Set up a secret santa game with your friends!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "lint": "eslint"
+  },
+  "keywords": [],
+  "author": "TheSuperFox",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
