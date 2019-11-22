@@ -24,11 +24,6 @@ client.on('message', message => {
             return message.channel.send("The santas have been sent. Enjoy!");
         }
     }
-    else if (command === "message") {
-        const userMentions = message.mentions.users.first();
-        //let users = [...new Set(userMentions)]
-        userMentions.send("hello")
-    }
 });
 
 function getPairs(users) {
