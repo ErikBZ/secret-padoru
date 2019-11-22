@@ -9,19 +9,25 @@ client.on('message', message => {
     const command = args.shift().toLowerCase();
 
     if (command === "shuffle") {
-        if (args.length === 1) {
-            return message.channel.send("You can't have a secret santa with a single person.");
+        const userMentions = message.mentions.users.array();
+        const users = [...new Set(userMentions)];
+
+        if (users.length <= 1) {
+            return message.channel.send("You must have at least 2 mentions to start the shuffle.");
         }
         else {
-            let users = [...new Set(args)];
-            let pairs = {};
+            const pairs = getPairs(users);
+            pairs.forEach(function(value, key) {
+                key.send("Hey you dingus, you're the secret santa for " + value.username);
+            });
 
-            pairs = getPairs(users);
-            msg = ""
-            console.log(pairs);
-
-            return message.channel.send(pairs);
+            return message.channel.send("The santas have been sent. Enjoy!");
         }
+    }
+    else if (command === "message") {
+        const userMentions = message.mentions.users.first();
+        //let users = [...new Set(userMentions)]
+        userMentions.send("hello")
     }
 });
 
@@ -30,10 +36,10 @@ function getPairs(users) {
     shuffle(partners);
     enforceEquity(users, partners);
 
-    pairs = {};
+    let pairs = new Map();
 
     for(let i = 0; i < users.length; i++) {
-        pairs[users[i]] = partners[i];
+        pairs.set(users[i], partners[i]);
     }
 
     return pairs;
@@ -51,10 +57,7 @@ function enforceEquity(primaries, partners) {
     for (let i=0; i < primaries.length; i++) {
         if (primaries[i] === partners[i]) {
             let j = (i + 1) % primaries.length;
-            console.log(partners);
-            console.log(j);
             [partners[i], partners[j]] = [partners[j], partners[i]];
-            console.log(partners);
         }
     }
 }
